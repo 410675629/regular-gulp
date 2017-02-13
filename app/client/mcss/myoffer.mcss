@@ -1,0 +1,107 @@
+.g-cont{width:1080px;margin:0 auto;min-height:600px;overflow:hidden};
+
+
+.m-top{
+  margin-top:20px;
+  .myoffer-top{
+    display:inline-block;
+
+
+    &.m-top-left{
+      border:1px solid #ff7d7d;
+      padding:10px 20px;
+      color:#ff7d7d;
+    }
+    &.m-top-right{
+      float:right;
+    }
+  }
+
+}
+.m-cont{
+  background-color:#fff;
+  padding:20px 30px;
+  position:relative;
+  margin-top:10px;
+  .corner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    &.corner-top-left {
+      border-top: 2px solid #eee;
+      border-left: 2px solid #eee;
+      left: 30px;
+      top: 30px;
+    }
+    &.corner-top-right {
+      border-top: 2px solid #eee;
+      border-right: 2px solid #eee;
+      right: 30px;
+      top: 30px;
+    }
+    &.corner-bottom-right {
+      border-bottom: 2px solid #eee;
+      border-right: 2px solid #eee;
+      right: 30px;
+      bottom: 30px;
+    }
+    &.corner-bottom-left {
+      border-bottom: 2px solid #eee;
+      border-left: 2px solid #eee;
+      left: 30px;
+      bottom: 30px;
+    }
+  }
+  .m-center{
+    margin:0 50px;
+    .m-center-top{
+      text-align:center;
+      color:$font-blue;
+      font-size:20px;
+      font-weight:bold;
+      letter-spacing:2px;
+      padding:30px 0 20px;
+      border-bottom:1px dashed #eee;
+    }
+    .m-center-body{
+      padding:0 5px 20px;
+      .first-cont{
+        padding-top:30px;
+        font-weight:bold;
+        line-height:25px;
+      }
+      .second-cont{
+        line-height:30px;
+        .indent-cont{
+          text-indent:20px;
+        }
+        .second-cont-strong{
+          font-weight:bold;
+        }
+        .second-cont-special{
+          color:#a3a4a6;
+          font-style:italic;
+        }
+      }
+      .spec-cont{
+        color:$font-spec;
+        font-weight:bold;
+
+      }
+      .cont-bottom{
+        padding:20px 0;
+        p{
+          line-height:20px;
+        }
+      }
+      .cont-bottom-right{
+        font-weight:normal;
+        text-align:right;
+
+      }
+
+    }
+  }
+}
+

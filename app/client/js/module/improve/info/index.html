@@ -1,0 +1,638 @@
+
+{#if rejectInfo}
+<div class="reject-info">
+    <span class="reject-info-title">驳回原因</span>
+    <span class="reject-info-cont">{rejectInfo}</span>
+</div>
+{/if}
+
+
+
+
+<div class="improve-title f-cb">
+    <span class="improve-title-left">个人信息</span>
+
+    <span class="info-edit" r-hide="{(!infoReadOnly) || auditStatus == 0 ||auditStatus == 1|| auditStatus == 2&&!rejectInfo}" on-click="{this.changeToEdit()}"><span class="improve-edit"></span>修改</span>
+    <span class="improve-title-right">注：姓名、手机号码、电子邮箱不支持修改，如信息有误，请联系HR。</span>
+</div>
+<section>
+<table ref="infoTable">
+    <tr>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>姓名:</label>
+            <span class="info-span info-span130">{base.name}</span>
+        </td>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>性别:</label>
+            <span class="info-span info-span130">
+                <select r-model="{base.gender}" class='{err.gender?"select-err":""}'r-hide="{infoReadOnly}" on-mouseover="{this.showErrInfo('gender')}" on-mouseleave="{this.hideErrInfo('gender')}">
+                    <option value="">请选择</option>
+                    <option value="0">男</option>
+                    <option value="1">女</option>
+                </select>
+                <span r-hide="{!infoReadOnly}">{#if base.gender=='0'}男{#elseif base.gender=='1'}女{/if}</span>
+                {#if errShowFlag.gender}
+                <div class="u-err-tip">
+                    <i class="u-err">{err.gender}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+                {/if}
+            </span>
+        </td>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>出生日期:</label>
+            <span class="info-span info-span130">
+                <input type="text"  ref="birthDateStr" readonly on-click={this.addDatePicker('birthDateStr',"birthday")} r-model="{base.birthday}" r-hide="{infoReadOnly}" class='{err.birthday?"input-err":""}' on-mouseover="{this.showErrInfo('birthday')}" on-mouseleave="{this.hideErrInfo('birthday')}"/>
+                <span r-hide="{!infoReadOnly}">{base.birthday}</span>
+                {#if errShowFlag.birthday}
+
+                <div class="u-err-tip" r-hide="{!errShowFlag.birthday}">
+                    <i class="u-err">{err.birthday}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+
+            </span>
+
+
+        </td>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>手机号码:</label>
+            <span class="info-span info-span130">{base.phone}</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>国籍:</label>
+            <span class="info-span info-span130">
+
+                <select r-model="{base.nation}" r-hide="{infoReadOnly}" class='{err.nation?"select-err":""}' on-mouseover="{this.showErrInfo('nation')}" on-mouseleave="{this.hideErrInfo('nation')}">
+                    <option value =''>请选择</option>
+                    {#list nation as item}
+                        <option value ={item.id} {#if base.nation==item.id || item.id=='156'}selected{/if}>{item.name}</option>
+                    {/list}
+                </select>
+                <span r-hide="{!infoReadOnly}">{nationName || '中国'}</span>
+                {#if errShowFlag.nation}
+                <div class="u-err-tip">
+                    <i class="u-err">{err.nation}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+            {/if}
+
+            </span>
+
+        </td>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>民族:</label>
+            <span class="info-span info-span130">
+
+                <select r-model="{base.nationality}" r-hide="{infoReadOnly}" class='{err.nationality?"select-err":""}' on-mouseover="{this.showErrInfo('nationality')}" on-mouseleave="{this.hideErrInfo('nationality')}">
+                    <option value =''>请选择</option>
+                    {#list nationality as item}
+                        <option value ={item.id} {#if base.nationality==item.id}selected{/if}>{item.name}</option>
+                    {/list}
+                </select>
+                <span r-hide="{!infoReadOnly}">{nationalityName || '汉族'}</span>
+                {#if errShowFlag.nationality}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.nationality}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+            {/if}
+            </span>
+
+
+        </td>
+        <td colspan="2">
+            <label class="info-label"><span class="u-required" >*</span>电子邮箱:</label>
+            <span class="info-span info-span310" >
+                {base.email}
+            </span>
+
+        </td>
+
+    </tr>
+
+    <tr>
+        <td>
+            <label class="info-label no-required">外语语种:</label>
+            <span class="info-span info-span130">
+
+                <select r-model="{base.language}" r-hide="{infoReadOnly}" class='{err.language?"select-err":""}' on-mouseover="{this.showErrInfo('language')}" on-mouseleave="{this.hideErrInfo('language')}">
+                    <option value =''>请选择</option>
+                    {#list language as item}
+                        <option value ={item.id} {#if base.language==item.id}selected{/if}>{item.name}</option>
+                    {/list}
+                </select>
+                <span r-hide="{!infoReadOnly}">{languageName}</span>
+                {#if errShowFlag.language}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.language}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+        </td>
+        <td>
+            <label class="info-label no-required">外语水平:</label>
+            <span class="info-span info-span130">
+
+                <select r-model="{base.languageLevel}" r-hide="{infoReadOnly}" class='{err.languageLevel?"select-err":""}' on-mouseover="{this.showErrInfo('languageLevel')}" on-mouseleave="{this.hideErrInfo('languageLevel')}">
+                    <option value =''>请选择</option>
+                    {#list languageLevel as item}
+                        <option value ={item.id} {#if base.languageLevel==item.id}selected{/if}>{item.name}</option>
+                    {/list}
+                </select>
+                <span r-hide="{!infoReadOnly}">{languageLevelName}</span>
+                {#if errShowFlag.languageLevel}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.languageLevel}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+
+        </td>
+        <td colspan="2">
+            <label class="info-label"><span class="u-required">*</span>参加工作时间:</label>
+            <span class="info-span info-span130">
+
+                <select r-model="{base.workYearNum}" r-hide="{infoReadOnly}">
+                    <option value="-1">无工作经验</option>
+                    {#list __workYearList as item}
+                    <option value="{item.id}" {#if item.id==workYearNum}selected{/if}>{item.name}</option>
+                    {/list}
+                </select>
+                <span r-hide="{!infoReadOnly}">{#if base.workYearNum==-1}无工作经验{#else}{base.workYearNum}年{/if}</span>
+                {#if errShowFlag.workYearNum}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.workYearNum}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+            <span class="info-span info-span130" r-hide="{base.workYearNum == '-1' || base.workYearNum == __lastWorkYear}">
+                <!--<input type="text"  ref="workDateStr" readonly on-click={this.addDatePicker(this.$refs.workDateStr,"workYear")} r-model="{base.workYear}" r-hide="{infoReadOnly}" class='{err.workYear?"input-err":""}' on-mouseover="{this.showErrInfo('workYear')}" on-mouseleave="{this.hideErrInfo('workYear')}"/>-->
+
+                <select r-model="{base.workMonth}" r-hide="{infoReadOnly}" class='{err.workMonth?"select-err":""}' on-mouseover="{this.showErrInfo('workMonth')}" on-mouseleave="{this.hideErrInfo('workMonth')}">
+                    <option value="">请选择</option>
+                    {#list __workMonthList as item}
+                    <option value="{item.id}" {#if item.id==workMonth}selected{/if}>{item.name}</option>
+                    {/list}
+                </select>
+                <span r-hide="{!infoReadOnly}">{base.workMonth}月</span>
+
+                {#if errShowFlag.workMonth}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.workMonth}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+                </div>
+                {/if}
+            </span>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td>
+            <label class="info-label {chinaNationFlag?'': 'no-required'}" >
+                {#if chinaNationFlag}
+                <span class="u-required">*</span>
+                {/if}
+                籍贯:
+            </label>
+            <span class="info-span info-span130">
+                <select r-model="{base.nativePlace}" r-hide="{infoReadOnly}" class='{err.nativePlace?"select-err":""}' on-mouseover="{this.showErrInfo('nativePlace')}" on-mouseleave="{this.hideErrInfo('nativePlace')}">
+                    <option value =''>请选择</option>
+                    {#list nativePlace as item}
+                        <option value ={item.id} {#if base.nativePlace==item.id}selected{/if}>{item.name}</option>
+                    {/list}
+                </select>
+                <span r-hide="{!infoReadOnly}">{nativePlaceName}</span>
+                {#if errShowFlag.nativePlace}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.nativePlace}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+        </td>
+        <td>
+            <label class="info-label {chinaNationFlag?'': 'no-required'}">{#if chinaNationFlag}<span class="u-required">*</span>{/if}户籍性质:</label>
+            <span class="info-span info-span130">
+                <select r-model="{base.registerType}" r-hide="{infoReadOnly}" class='{err.registerType?"select-err":""}' on-mouseover="{this.showErrInfo('registerType')}" on-mouseleave="{this.hideErrInfo('registerType')}">
+
+                    <option value="">请选择</option>
+                    <option value ='0'>本地城镇</option>
+                    <option value ='1'>本地农村</option>
+                    <option value ='2'>外地城镇</option>
+                    <option value ='3'>外地农村</option>
+
+                </select>
+                <span r-hide="{!infoReadOnly}">
+                    {#if base.registerType == '0'}本地城镇
+                    {#elseif base.registerType == '1'}本地农村
+                    {#elseif base.registerType == '2'}外地城镇
+                    {#elseif base.registerType == '3'}外地农村{/if}
+                </span>
+                {#if errShowFlag.registerType}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.registerType}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+
+        </td>
+        <td colspan="2">
+            <label class="info-label"><span class="u-required">*</span>身份证号:</label>
+            <span class="info-span info-span130">
+
+                <select r-model="{base.idType}" r-hide="{infoReadOnly}" class='{err.idType?"select-err":""}' on-mouseover="{this.showErrInfo('idType')}" on-mouseleave="{this.hideErrInfo('idType')}">
+                    <option value="">请选择</option>
+                    <option value ='0' selected>内籍</option>
+                    <option value ='1'>外籍</option>
+
+                </select>
+                <span r-hide="{!infoReadOnly}">{#if base.idType=='0'}内籍{#elseif base.idType=='1'}外籍{/if}</span>
+                {#if errShowFlag.idType}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.idType}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+                {/if}
+            </span>
+
+            <span class="info-span info-span200">
+
+                <input type="text" placeholder="请输入" r-model="{base.idNumber}" r-hide="{infoReadOnly}" class='{err.idNumber?"input-err":""}' on-mouseover="{this.showErrInfo('idNumber')}" on-mouseleave="{this.hideErrInfo('idNumber')}">
+                <span r-hide="{!infoReadOnly}">{base.idNumber}</span>
+                {#if errShowFlag.idNumber}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.idNumber}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <label class="info-label"><span class="u-required">*</span>户籍地址:</label>
+            <span class="info-span info-span375">
+                <input type="text" placeholder="请输入" r-model="{base.registerAddr}" r-hide="{infoReadOnly}" class='{err.registerAddr?"input-err":"nationality"}' on-mouseover="{this.showErrInfo('registerAddr')}" on-mouseleave="{this.hideErrInfo('registerAddr')}">
+                <span r-hide="{!infoReadOnly}">{base.registerAddr}</span>
+                {#if errShowFlag.registerAddr}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.registerAddr}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+        </td>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>身份证到期日:</label>
+            <span class="info-span info-span130">
+
+                <input type="text"  ref="idDeadline" readonly on-click={this.addDatePicker('idDeadline',"idDeadline")} r-model="{base.idDeadline}" r-hide="{infoReadOnly}" class='{err.idDeadline?"input-err":""}' on-mouseover="{this.showErrInfo('idDeadline')}" on-mouseleave="{this.hideErrInfo('idDeadline')}"/>
+                <span r-hide="{!infoReadOnly}">{base.idDeadline}</span>
+                {#if errShowFlag.idDeadline}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.idDeadline}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+
+        </td>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>婚姻状况:</label>
+            <span class="info-span info-span130">
+
+                <select r-model="{base.married}" r-hide="{infoReadOnly}" class='{err.married?"select-err":""}' on-mouseover="{this.showErrInfo('married')}" on-mouseleave="{this.hideErrInfo('married')}">
+
+                    <option value =''>请选择</option>
+                    <option value ='0'>未婚</option>
+                    <option value ='1'>已婚</option>
+
+                </select>
+                <span r-hide="{!infoReadOnly}">{#if base.married=='0'}未婚{#elseif base.married=='1'}已婚{/if}</span>
+                {#if errShowFlag.married}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.married}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+
+            </span>
+
+
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="2">
+            <label class="info-label"><span class="u-required">*</span>通讯地址:</label>
+            <span class="info-span info-span375">
+                <input type="text" placeholder="请输入" r-model="{base.communicationAddr}" r-hide="{infoReadOnly}" class='{err.communicationAddr?"input-err":""}' on-mouseover="{this.showErrInfo('communicationAddr')}" on-mouseleave="{this.hideErrInfo('communicationAddr')}"/>
+                <span r-hide="{!infoReadOnly}">{base.communicationAddr}</span>
+                {#if errShowFlag.communicationAddr}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.communicationAddr}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+
+        </td>
+        <td colspan="2">
+            <label class="info-label"><span class="u-required">*</span>现居地址:</label>
+            <span class="info-span info-span375">
+                <input type="text" placeholder="请输入" r-model="{base.liveAddr}" r-hide="{infoReadOnly}" class='{err.liveAddr?"input-err":""}' on-mouseover="{this.showErrInfo('liveAddr')}" on-mouseleave="{this.hideErrInfo('liveAddr')}">
+
+                <span r-hide="{!infoReadOnly}">{base.liveAddr}</span>
+                {#if errShowFlag.liveAttr}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.liveAddr}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+                {/if}
+            </span>
+        </td>
+
+
+    </tr>
+    <tr>
+        <td>
+            <label class="info-label info-label-position"><span class="u-required">*</span>工资卡:
+                {#if !salaryCardTypeReadOnly}
+                <i class="i-tip" on-mouseover={this.setIconStatus(true)} on-mouseleave={this.setIconStatus(false)}>?</i>
+                {/if}
+            <div class="hover-icon" r-hide={(!iconStatus) || salaryCardTypeReadOnly}>
+                <span class="hover-icon-cont">若您名下有招商银行借记卡请选择“自行准备”，并提供卡号、开户行。若没有，公司将为您办理招商银行借记卡。（招商银行规定，在全国范围内只允许办理一张借记卡）</span>
+                <span class="hover-icon-arrow"></span>
+            </div>
+            </label>
+            
+            <span class="info-span info-span130">
+                {#if !salaryCardTypeReadOnly}
+                <select r-model="{base.salaryCardType}" r-hide="{infoReadOnly}" class='{err.salaryCardType?"select-err":""}' on-mouseover="{this.showErrInfo('salaryCardType')}" on-mouseleave="{this.hideErrInfo('salaryCardType')}">
+                    <option value="">请选择</option>
+                    <option value="0">公司办理</option>
+                    <option value="1">自行准备</option>
+                </select>
+                <span r-hide="{!infoReadOnly}">{#if base.salaryCardType=='0'}公司办理{#elseif base.salaryCardType=='1'}自行准备{/if}</span>
+                {#else}
+                   <span class="info-span info-span130" >{#if base.salaryCardType=='0'}公司办理{#elseif base.salaryCardType=='1'}自行准备{/if}</span>
+                {/if}
+                {#if errShowFlag.salaryCardType}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.salaryCardType}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+        </td>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>紧急联系人:</label>
+            <span class="info-span info-span130">
+
+                <input type="text" placeholder="请输入" r-model="{base.emergencyContacts}" r-hide="{infoReadOnly}" class='{err.emergencyContacts?"input-err":""}' on-mouseover="{this.showErrInfo('emergencyContacts')}" on-mouseleave="{this.hideErrInfo('emergencyContacts')}">
+                <span r-hide="{!infoReadOnly}">{base.emergencyContacts}</span>
+                {#if errShowFlag.emergencyContacts}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.emergencyContacts}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+
+
+        </td>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>联系人电话:</label>
+            <span class="info-span info-span130">
+                <input type="text" placeholder="请输入" r-model="{base.emergencyPhone}" r-hide="{infoReadOnly}" class='{err.emergencyPhone?"input-err":""}' on-mouseover="{this.showErrInfo('emergencyPhone')}" on-mouseleave="{this.hideErrInfo('emergencyPhone')}">
+                <span r-hide="{!infoReadOnly}">{base.emergencyPhone}</span>
+                {#if errShowFlag.emergencyPhone}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.emergencyPhone}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+        </td>
+        <td>
+            <label class="info-label"><span class="u-required">*</span>联系人关系:</label>
+            <span class="info-span info-span130">
+                <input type="text" placeholder="请输入" r-model="{base.emergencyRelation}" r-hide="{infoReadOnly}" class='{err.emergencyRelation?"input-err":""}' on-mouseover="{this.showErrInfo('emergencyRelation')}" on-mouseleave="{this.hideErrInfo('emergencyRelation')}">
+                <span r-hide="{!infoReadOnly}">{base.emergencyRelation}</span>
+                {#if errShowFlag.emergencyRelation}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.emergencyRelation}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+
+        </td>
+    </tr>
+    {#if base.salaryCardType==1}
+    <tr>
+        <td colspan="2">
+            <label class="info-label"><span class="u-required">*</span>银行卡号:</label>
+            <span class="info-span info-span375">
+                <input type="text" placeholder="请填写银行卡号" r-model="{base.salaryCardNumber}" r-hide="{infoReadOnly}" class='{err.salaryCardNumber?"input-err":""}' on-mouseover="{this.showErrInfo('salaryCardNumber')}" on-mouseleave="{this.hideErrInfo('salaryCardNumber')}">
+                <span r-hide="{!infoReadOnly}">{base.salaryCardNumber}</span>
+                {#if errShowFlag.salaryCardNumber}
+
+                <div class="u-err-tip">
+                    <i class="u-err">{err.salaryCardNumber}</i>
+                    <i class="u-err-arrow-big"></i>
+                    <i class="u-err-arrow-small"></i>
+
+                </div>
+
+                {/if}
+            </span>
+
+        </td>
+        <td colspan="2">
+            <label class="info-label"><span class="u-required">*</span>开户行:</label>
+            <span class="info-span info-span375">
+                <input type="text" placeholder="需具体到支行，例如：招商银行杭州高新支行" r-model="{base.cardSubbranch}" r-hide="{infoReadOnly}" class='{err.cardSubbranch?"input-err":""}' on-mouseover="{this.showErrInfo('cardSubbranch')}" on-mouseleave="{this.hideErrInfo('cardSubbranch')}">
+                <span r-hide="{!infoReadOnly}">{base.cardSubbranch}</span>
+
+            {#if errShowFlag.cardSubbranch}
+
+            <div class="u-err-tip">
+                <i class="u-err">{err.cardSubbranch}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+
+            {/if}
+            </span>
+
+        </td>
+    </tr>
+    {/if}
+    <tr>
+        <td colspan="4">
+            <label class="info-label150"><span class="u-required">*</span>身份证(正反面):</label>
+            <span class="info-span info-span750"  r-hide="{infoReadOnly || base.attIdFileInfo}">
+                <form class='info-form' ref="form1" action="/file/upload.do" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="picName" value="{user}-身份证.{idPostfix}">
+                    <!--<input type="hidden" name="id" value={base.attIdFileInfo&&base.attIdFileInfo.id}>-->
+                    <input type="file" name='file' on-change="{this.evChoiceFile($event,'attId','1')}"  on-mouseover="{this.evHoverButtonStyle('idCardUploadButton')}" on-mouseleave="{this.evLeaveButtonStyle('idCardUploadButton')}"/>
+                    <input type="button"  class='button btn-gray' value="选择附件" ref=idCardUploadButton>
+                    {#if base.attIdFilePath}
+                        <span>{base.attIdFilePath} </span>
+                    {#elseif base.attIdFileInfo}
+                        <span>{user}-身份证.{idPostfix}</span>
+                    {#elseif err.attIdFilePath}
+                        <span class='{err.attIdFilePath?"info-span-err":""}'>必填  身份证正反两面在同一页，支持jpeg、jpg、png、pdf，文件需小于20M.</span>
+                    {#else}
+                        <span>身份证正反两面在同一页，支持jpeg、jpg、png、pdf，文件需小于20M.</span>
+                    {/if}
+                </form>
+            </span>
+            <span class="info-span" r-hide="{!(infoReadOnly || base.attIdFileInfo)}"><a href="{base.attIdFileInfo&&base.attIdFileInfo.url}">{user}-身份证.{idPostfix}</a></span>
+            <span class="info-edit" on-click="{this.deleteAffix('attId')}" r-hide="{!(!infoReadOnly&&base.attIdFileInfo)}"><span class="improve-delete"></span></span>
+            <a class="show-eg" on-click="{this.showEg('./entry/img/idcard.jpg')}">查看示例</a>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="4">
+            <label class="info-label150"><span class="u-required">*</span>户口本(户主页&本人页):</label>
+            <span class="info-span info-span750" r-hide="{infoReadOnly || base.attRegisterFileInfo}">
+                <form ref="form2" class='info-form' id="formRegister" action="/file/upload.do" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="picName" value="{user}-户口本.{registerPostfix}">
+                    <!--<input type="hidden" name="id" value={base.attRegisterFileInfo&&base.attRegisterFileInfo.id}>-->
+                    <input type="file" name='file' on-change="{this.evChoiceFile($event,'attRegisterId','2')}" on-mouseover="{this.evHoverButtonStyle('registerUploadButton')}" on-mouseleave="{this.evLeaveButtonStyle('registerUploadButton')}"/>
+                    <input type="button" class='button btn-gray' value="选择附件" ref=registerUploadButton>
+
+                    {#if base.attRegisterFilePath}
+                        <span>{base.attRegisterFilePath}</span>
+                    {#elseif base.attRegisterFileInfo}
+
+                        <span>{user}-户口本.{registerPostfix}</span>
+                    {#elseif err.attRegisterFilePath}
+
+                        <span class="info-span info-span-err">必填  户主页和本人页在同一页，支持jpeg、jpg、png、pdf，文件需小于20M.</span>
+                    {#else}
+                        <span>户主页和本人页在同一页，支持jpeg、jpg、png、pdf，文件需小于20M.</span>
+                    {/if}
+
+
+                </form>
+            </span>
+
+
+            <span class="info-span" r-hide="{!(infoReadOnly || base.attRegisterFileInfo)}"><a href="{base.attRegisterFileInfo&&base.attRegisterFileInfo.url}">{user}-户口本.{registerPostfix}</a></span>
+            <span class="info-edit" on-click="{this.deleteAffix('attRegister')}" r-hide="{!(!infoReadOnly&&base.attRegisterFileInfo)}"><span class="improve-delete"></span></span>
+
+            <a class="show-eg" on-click="{this.showEg('./entry/img/register.jpg')}">查看示例</a>
+        </td>
+
+    </tr>
+
+
+
+</table>
+<div class="info-footer">
+    <input type="submit" value="保    存" class="button btn-active" on-click="{this.submit()}" r-hide="{infoReadOnly}">
+</div>
+</section>

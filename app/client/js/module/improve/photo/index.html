@@ -1,0 +1,54 @@
+
+{#if rejectInfo}
+<div class="reject-info">
+    <span class="reject-info-title">驳回原因</span>
+    <span class="reject-info-cont">{rejectInfo}</span>
+</div>
+{/if}
+
+
+<div class="improve-title f-cb">
+    <span class="improve-title-left">工牌照</span>
+
+</div>
+
+<div class="photo-upload">
+    {#if attWorkCardFileInfo}
+        <img src="{attWorkCardFileInfo.url}" width="358px" height="441px"/>
+    <span class="photo-change-icon" r-hide="{auditStatus == 0 ||auditStatus == 1|| (auditStatus == 2&&!rejectInfo)}">
+        <form ref="form1" action="/image/cutAndUpload.do" enctype="multipart/form-data" method="post" class='{err.attWorkCardId?"photo-file small-form info-form-err":"photo-file small-form"}'>
+            <input type="hidden" name="picName" value="{user}-工牌照.{workCardPostfix}">
+            <input type="hidden" name="beginWidth" value={formData.beginWidth}>
+            <input type="hidden" name="beginHeight" value={formData.beginHeight}>
+            <input type="hidden" name="widthSize " value="{formData.widthSize}">
+            <input type="hidden" name="heightSize " value="{formData.heightSize}">
+            <input type="file"  name='file' class="photo-file" on-change="{this.evChoiceFile($event,'attWorkCardId','1')}"/>
+        </form>
+    </span>
+
+    {#else}
+    <form ref="form2" action="/image/cutAndUpload.do" enctype="multipart/form-data" method="post" class='{err.attWorkCardId?"photo-file info-form-err":"photo-file"}'>
+        <input type="hidden" name="picName" value="{user}-工牌照.{workCardPostfix}">
+        <input type="hidden" name="beginWidth" value={formData.beginWidth}>
+        <input type="hidden" name="beginHeight" value={formData.beginHeight}>
+        <input type="hidden" name="widthSize " value="{formData.widthSize}">
+        <input type="hidden" name="heightSize " value="{formData.heightSize}">
+        <input type="file"  name='file' class="photo-file" on-change="{this.evChoiceFile($event,'attWorkCardId','2')}"/>
+    </form>
+
+    <div class="xy-center">
+        <span class="photo-file-icon">+</span>
+        <span class="photo-file-text">点击上传照片</span>
+    </div>
+
+    {/if}
+</div>
+
+{#if attWorkCardFileInfo && attWorkCardFileInfo.name}
+<div class="photo-detail"><a href="{attWorkCardFileInfo.url}">{user}-工牌照.{workCardPostfix}</a></div>
+{/if}
+<div class="photo-detail">支持jpg，不超过20M</div>
+
+<div class="photo-detail">照片要求：正面免冠，本人半身照，五官清晰，白色背景</div>
+
+

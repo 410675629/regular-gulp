@@ -1,0 +1,123 @@
+
+{#if rejectInfo}
+<div class="reject-info">
+    <span class="reject-info-title">驳回原因</span>
+    <span class="reject-info-cont">{rejectInfo}</span>
+</div>
+{/if}
+
+<div class="improve-title f-cb">
+    <span class="improve-title-left">教育经历</span>
+
+</div>
+
+<table>
+    <thead class="info-table">
+
+    <td class="thead-common thead105"><span class="u-required">*</span>开始时间</td>
+    <td class="thead-common thead105"><span class="u-required">*</span>结束时间</td>
+    <td class="thead-common thead105"><span class="u-required">*</span>学历</td>
+    <td class="thead-common thead105"><span class="u-required">*</span>学位</td>
+    <td class="thead-common thead200"><span class="u-required">*</span>学校</td>
+    <td class="thead-common thead200"><span class="u-required">*</span>专业</td>
+    {#if rejectInfo || auditStatus == null}
+    <td class="thead-common thead-add" on-click={this.addEducation()}>添加 <span>+</span> </td>
+    {/if}
+    </thead>
+    <tbody ref="eduCont">
+    {#if  !!(education && degree)}
+    {#if educationInfo }
+
+        {#list educationInfo as item}
+            <addItem educationInfo="{item}"  education = {education} degree={degree} infoReadOnly = "{true}" auditStatus={auditStatus} rejectInfo={rejectInfo} on-checkStatus="{this.checkStatus()}" checkDelete="{checkDelete}"></addItem>
+        {/list}
+    <!--{#else}
+        <addItem degree={degree} education={education} auditStatus={auditStatus}></addItem>-->
+    {/if}
+    {/if}
+    </tbody>
+</table>
+
+<div class="improve-title f-cb">
+    <span class="improve-title-left">学历证书</span>
+
+</div>
+
+{#if isIntern != 1}
+<div class="file-div first-file-div">
+    <label class="info-label150"><span class="u-required">*</span>最高学历毕业证:</label>
+
+    <span class="info-span info-span750" r-hide="{attTopGraduateAffixUploadSuccess}">
+       <form ref="form1" class='info-form' id="formEdu" action="/file/upload.do" enctype="multipart/form-data" method="post">
+            <input type="hidden" name="picName" value="{user}-最高学历毕业证.{topGraduatePostfix}">
+            <input type="hidden" name="id" value={attTopGraduateFileInfo&&attTopGraduateFileInfo.id}>
+            <input type="file" name='file' on-change="{this.evChoiceFile($event,'attTopGraduate','1')}"  on-mouseover="{this.evHoverButtonStyle('topGraduateUploadButton')}" on-mouseleave="{this.evLeaveButtonStyle('topGraduateUploadButton')}"/>
+            <input type="button" value="选择附件" class='button btn-gray' ref="topGraduateUploadButton">
+
+            {#if attTopGraduateFileInfo.name}
+                <span>{attTopGraduateFileInfo.name}</span>
+            {#else}
+                <span>毕业证编号需清晰，支持jpeg、jpg、png、pdf，文件需小于20M</span>
+            {/if}
+        </form>
+    </span>
+
+
+    <span class="info-span" r-hide="{!(attTopGraduateAffixUploadSuccess)}"><a href="{attTopGraduateFileInfo && attTopGraduateFileInfo.url}">{user}-最高学历毕业证.{topGraduatePostfix}</a></span>
+    <span class="info-edit" on-click="{this.deleteAffix('attTopGraduate')}" r-hide="{(!attTopGraduateAffixUploadSuccess) ||auditStatus == 0 || auditStatus ==1 || (auditStatus == 2&&!rejectInfo)}"><span class="improve-delete"></span></span>
+
+
+</div>
+
+<div class="file-div last-file-div" r-hide="{(auditStatus == 0 || auditStatus ==1 || (auditStatus == 2&&!rejectInfo))&&(!attTopDegreeFileInfo)}">
+    <label class="info-label150 no-required">最高学位学位证:</label>
+    <span class="info-span info-span750" r-hide="{attTopDegreeAffixUploadSuccess}">
+        <form ref="form2" class='info-form' id="formDegree" action="/file/upload.do" enctype="multipart/form-data" method="post">
+            <input type="hidden" name="picName" value="{user}-最高学位学位证.{topDegreePostfix}">
+            <input type="hidden" name="id" value={attTopDegreeFileInfo&&attTopDegreeFileInfo.id}>
+            <input type="file" name='file' on-change="{this.evChoiceFile($event,'attTopDegree','2')}" on-mouseover="{this.evHoverButtonStyle('topDegreeUploadButton')}" on-mouseleave="{this.evLeaveButtonStyle('topDegreeUploadButton')}"/>
+            <input type="button" value="选择附件" class='button btn-gray' ref="topDegreeUploadButton">
+
+            {#if attTopDegreeFileInfo.name}
+                <span>{attTopDegreeFileInfo.name}</span>
+            {#else}
+                <span>学位证编号需清晰，支持jpeg、jpg、png、pdf，文件需小于20M</span>
+            {/if}
+
+        </form>
+
+    </span>
+
+    <span class="info-span" r-hide="{!(attTopDegreeAffixUploadSuccess)}"><a href="{attTopDegreeFileInfo&&attTopDegreeFileInfo.url}">{user}-最高学位学位证.{topDegreePostfix}</a></span>
+    <span class="info-edit" on-click="{this.deleteAffix('attTopDegree')}" r-hide="{(!attTopDegreeAffixUploadSuccess) ||auditStatus == 0 || auditStatus ==1 || (auditStatus == 2&&!rejectInfo)}"><span class="improve-delete"></span></span>
+
+
+
+</div>
+
+{#else}
+<div class="file-div first-file-div last-file-div ">
+    <label class="info-label150"><span class="u-required">*</span>学生证:</label>
+    <span class="info-span info-span750" r-hide="{attIdentityCardAffixUploadSuccess}">
+        <form ref="form3" class='info-form'  action="/file/upload.do" enctype="multipart/form-data" method="post">
+            <input type="hidden" name="picName" value="{user}-学生证.{identityCardPostfix}">
+            <input type="hidden" name="id" value={attIdentityCardFileInfo&&attIdentityCardFileInfo.id}>
+            <input type="file" name='file' on-change="{this.evChoiceFile($event,'attIdentityCard','3')}" on-mouseover="{this.evHoverButtonStyle('identityCardUploadButton')}" on-mouseleave="{this.evLeaveButtonStyle('identityCardUploadButton')}"/>
+            <input type="button" value="选择附件" class='button btn-gray' ref='identityCardUploadButton'>
+
+            {#if attIdentityCardFileInfo.name}
+                <span>{attIdentityCardFileInfo.name}</span>
+            {#else}
+                <span>学号需清晰，支持jpeg、jpg、png、pdf，文件需小于20M</span>
+            {/if}
+
+        </form>
+    </span>
+
+    <span class="info-span" r-hide="{!(attIdentityCardAffixUploadSuccess)}"><a href="{attIdentityCardFileInfo&&attIdentityCardFileInfo.url}">{user}-学生证.{identityCardPostfix}</a></span>
+
+    <span class="info-edit" on-click="{this.deleteAffix('attIdentityCard')}" r-hide="{(!attIdentityCardAffixUploadSuccess) ||auditStatus == 0 || auditStatus ==1 || (auditStatus == 2&&!rejectInfo)}"><span class="improve-delete"></span></span>
+
+
+</div>
+{/if}

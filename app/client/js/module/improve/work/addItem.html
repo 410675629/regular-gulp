@@ -1,0 +1,74 @@
+<tr class="{infoReadOnly?'':'info-table'}">
+
+    <td>
+        <span class="info-span info-span130">
+            <input type="text" readonly ref="startWorkDateStr" r-hide="{infoReadOnly}" on-click={this.addDatePicker(this.$refs.startWorkDateStr,"startDate")} r-model="{workExperience.startDate}" class='{err.startDate?"input-err":""}' on-mouseover="{this.showErrInfo('startDate')}" on-mouseleave="{this.hideErrInfo('startDate')}"/>
+            <span r-hide="{!infoReadOnly}">{workExperience.startDate}</span>
+            {#if errShowFlag.startDate}
+            <div class="u-err-tip">
+                <i class="u-err">{err.startDate}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+    </td>
+    <td>
+        <span class="info-span info-span130">
+            <input type="text" readonly ref="endWorkDateStr" r-hide="{infoReadOnly}" on-click={this.addDatePicker(this.$refs.endWorkDateStr,"endDate")} r-model="{workExperience.endDate}" class='{err.endDate?"input-err":""}' on-mouseover="{this.showErrInfo('endDate')}" on-mouseleave="{this.hideErrInfo('endDate')}"/>
+            <span r-hide="{!infoReadOnly}">{workExperience.endDate}</span>
+            {#if errShowFlag.endDate}
+            <div class="u-err-tip">
+                <i class="u-err">{err.endDate}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+    </td>
+
+    <td>
+        <span class="info-span info-span300">
+            <input type='text' r-model="{workExperience.company}" r-hide="{infoReadOnly}" class='{err.company?"input-err":""}' on-mouseover="{this.showErrInfo('company')}" on-mouseleave="{this.hideErrInfo('company')}">
+
+
+            <span r-hide="{!infoReadOnly}">{workExperience.company}</span>
+            {#if errShowFlag.company}
+            <div class="u-err-tip">
+                <i class="u-err">{err.company}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+    </td>
+
+    <td>
+        <span class="info-span info-span300">
+            <input type='text' r-model="{workExperience.position}" r-hide="{infoReadOnly}" class='{err.position?"input-err":""}' on-mouseover="{this.showErrInfo('position')}" on-mouseleave="{this.hideErrInfo('position')}">
+
+
+            <span r-hide="{!infoReadOnly}">{workExperience.position}</span>
+            {#if errShowFlag.position}
+            <div class="u-err-tip">
+                <i class="u-err">{err.position}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+    </td>
+
+    {#if rejectInfo || auditStatus == null}
+    <td>
+        <span class="improve-save" r-hide="{infoReadOnly}" on-click="{this.saveWorkExpInfo()}"></span>
+        <span class="improve-edit" r-hide="{!infoReadOnly}" on-click="{this.editWorkExpInfo()}"></span>
+        <span class="improve-delete" on-click="{this.deleteWorkExpInfo()}"></span>
+    </td>
+    {/if}
+</tr>
+

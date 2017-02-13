@@ -1,0 +1,48 @@
+
+<div class="m-login" on-enter={this.submit($event)} >
+<div class="login">
+    <div class="login-header">
+        <div><span class="login-header-span1">Hi</span><span class="login-header-span2">欢迎, 新同事!</span></div>
+    </div>
+    <div class="form-login">
+        <div class="form-row">
+            <span class="icon">
+                <i class="fa fa-name"></i>
+            </span>
+            <input type="text" placeholder="请输入姓名" name='passport' r-model="{formData.passport}" r-autofocus/>
+        </div>
+        <div class="form-row">
+            <span class="icon">
+                <i class="fa fa-id"></i>
+            </span>
+            <input type="text" placeholder="请输入身份证号" name="idNumber" r-model="{formData.idNumber}"/>
+        </div>
+        <div class="form-row">
+            <span class="icon">
+                <i class="fa fa-pwd"></i>
+            </span>
+            <input type="password" placeholder="请输入密码" name="password" r-model="{formData.password}"/>
+        </div>
+        <div class="form-row form-row-code">
+            <span class="icon">
+                <i class="fa fa-token"></i>
+            </span>
+            <input type="text" placeholder="请输入验证码" name="code" r-model="{formData.validateCode}"/>
+            <img src="/sys/getValiationCode.do" class="login-code" on-click="{this.updateValiationCode()}" ref=valiationImg/>
+            <!--<img src="http://ehrnes.163.com//sys/getValiationCode.do" class="login-code"  ref=valiationImg/>-->
+        </div>
+        <div class="login-tip" >
+            <label class='login-err-tip' r-hide="{errInfo == ''}">{errInfo}</label>
+            <label class="login-reset-tip"><a on-click="{this.changeToReset()}">忘记密码</a></label>
+
+        </div>
+
+
+
+
+        <div class="form-row form-row-button" >
+            <input type="submit" class='{btnFlag?"button btn-active":"button btn-disable"}' value="登   录"   on-click={this.submit()}/>
+        </div>
+    </div>
+</div>
+</div>

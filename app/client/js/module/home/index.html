@@ -1,0 +1,12 @@
+<div class="m-home">
+    <div class="home">
+        {#list homeList as x}
+            <div class="img-n img-n{x.id}" on-click={this.goNav(x.id)}>
+                <div class="img-nav">
+                    <span class="zh-name">{x.zhName}</span>
+                    <span class="en-Name">{x.enName}</span>
+                </div>
+            </div>
+        {/list}
+    </div>
+</div>

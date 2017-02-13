@@ -1,0 +1,101 @@
+<tr class="{infoReadOnly?'':'info-table'}">
+
+    <td>
+        <span class="info-span info-span100">
+            <input type="text"  r-hide="{infoReadOnly}" r-model="{familyInfo.memberName}" class='{err.memberName?"input-err":""}' on-mouseover="{this.showErrInfo('memberName')}" on-mouseleave="{this.hideErrInfo('memberName')}"/>
+            <span r-hide="{!infoReadOnly}">{familyInfo.memberName}</span>
+            {#if errShowFlag.memberName}
+            <div class="u-err-tip">
+                <i class="u-err">{err.memberName}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+    </td>
+    <td>
+        <span class="info-span info-span100">
+            <select r-hide="{infoReadOnly}" r-model="{familyInfo.relationship}" class='{err.relationship?"select-err":""}' on-mouseover="{this.showErrInfo('relationship')}" on-mouseleave="{this.hideErrInfo('relationship')}">
+                <option value="">请选择</option>
+                <option value="A">配偶</option>
+                <option value="B">父母</option>
+                <option value="C">子女</option>
+                <option value="D">主要社会关系</option>
+            </select>
+
+            <span r-hide="{!infoReadOnly}">
+                {#if familyInfo.relationship=='A'}
+                配偶
+                {#elseif familyInfo.relationship=='B'}
+                父母
+                {#elseif familyInfo.relationship=='C'}
+                子女
+                {#elseif familyInfo.relationship=='D'}
+                主要社会关系
+                {/if}
+
+            </span>
+            {#if errShowFlag.relationship}
+            <div class="u-err-tip">
+                <i class="u-err">{err.relationship}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+    </td>
+    <td>
+        <span class="info-span info-span210">
+            <input type="text" r-hide="{infoReadOnly}" r-model="{familyInfo.company}" class='{err.company?"input-err":""}' on-mouseover="{this.showErrInfo('company')}" on-mouseleave="{this.hideErrInfo('company')}"/>
+            <span r-hide="{!infoReadOnly}">{familyInfo.company}</span>
+            {#if errShowFlag.company}
+            <div class="u-err-tip">
+                <i class="u-err">{err.company}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+    </td>
+    <td>
+        <span class="info-span info-span210">
+            <input type="text" r-hide="{infoReadOnly}" r-model="{familyInfo.position}" class='{err.position?"input-err":""}' on-mouseover="{this.showErrInfo('position')}" on-mouseleave="{this.hideErrInfo('position')}"/>
+            <span r-hide="{!infoReadOnly}">{familyInfo.position}</span>
+            {#if errShowFlag.position}
+            <div class="u-err-tip">
+                <i class="u-err">{err.position}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+    </td>
+    <td>
+        <span class="info-span info-span200">
+            <input type="text" r-hide="{infoReadOnly}" r-model="{familyInfo.phone}" class='{err.phone?"input-err":""}' on-mouseover="{this.showErrInfo('phone')}" on-mouseleave="{this.hideErrInfo('phone')}"/>
+            <span r-hide="{!infoReadOnly}">{familyInfo.phone}</span>
+            {#if errShowFlag.phone}
+            <div class="u-err-tip">
+                <i class="u-err">{err.phone}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+    </td>
+
+    {#if rejectInfo || auditStatus == null}
+    <td>
+
+        <span class="improve-save" r-hide="{infoReadOnly}" on-click="{this.saveMember()}"></span>
+        <span class="improve-edit" r-hide="{!infoReadOnly}" on-click="{this.editMember()}"></span>
+        <span class="improve-delete" on-click="{this.deleteMember()}"></span>
+
+    </td>
+    {/if}
+</tr>

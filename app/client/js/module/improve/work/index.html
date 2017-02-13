@@ -1,0 +1,65 @@
+
+{#if rejectInfo}
+<div class="reject-info">
+    <span class="reject-info-title">驳回原因</span>
+    <span class="reject-info-cont">{rejectInfo}</span>
+</div>
+{/if}
+
+<div class="improve-title f-cb">
+    <span class="improve-title-left">工作经历</span>
+
+</div>
+
+<table>
+    <thead class="info-table">
+
+    <td class="thead-common thead130"><span class="u-required">*</span>开始时间</td>
+    <td class="thead-common thead130"><span class="u-required">*</span>结束时间</td>
+    <td class="thead-common thead300"><span class="u-required">*</span>公司</td>
+    <td class="thead-common thead300"><span class="u-required">*</span>职位</td>
+    {#if rejectInfo || auditStatus == null}
+    <td class="thead-common thead-add" on-click={this.addWorkExperience()}>添加 <span>+</span> </td>
+    {/if}
+    </thead>
+    <tbody ref = 'workExp'>
+    {#if workExperience }
+    {#list workExperience as item}
+
+    <addItem workExperience="{item}" infoReadOnly = "{true}" auditStatus={auditStatus} rejectInfo={rejectInfo} on-checkStatus="{this.checkStatus()}"></addItem>
+    {/list}
+    <!--{#elseif auditStatus == null}
+    <addItem auditStatus={auditStatus} rejectInfo={rejectInfo}></addItem>-->
+    {/if}
+    </tbody>
+</table>
+
+<div class="improve-title f-cb" r-hide="{(auditStatus == 0 || auditStatus ==1 || (auditStatus == 2&&!rejectInfo))&&(!attLeavingFileInfo)}">
+    <span class="improve-title-left">离职/失业证明</span>
+
+</div>
+
+<div class="file-div first-file-div last-file-div" r-hide="{(auditStatus == 0 || auditStatus ==1 || (auditStatus == 2&&!rejectInfo))&&(!attLeavingFileInfo)}">
+    <label class="info-label140">离职/失业证明:</label>
+    <span class="info-span info-span810" r-hide="{attLeavingAffixUploadSuccess}">
+       <form ref="form1" class='info-form' action="/file/upload.do" enctype="multipart/form-data" method="post">
+            <input type="hidden" name="picName" value="{user}-离职失业证明.{attLeavingPostfix}">
+            <!--<input type="hidden" name="id" value={attLeavingFileInfo&&attLeavingFileInfo.id}>-->
+            <input type="file" name='file' on-change="{this.evChoiceFile($event,'1')}" on-mouseover="{this.evHoverButtonStyle('leavingUploadButton')}" on-mouseleave="{this.evLeaveButtonStyle('leavingUploadButton')}"/>
+            <input type="button" value="选择附件" class='button btn-gray' ref="leavingUploadButton">
+
+            {#if attLeavingFileInfo.name}
+                <span>{attLeavingFileInfo.name}</span>
+            {#else}
+                <span>请提供最近一份工作的离职证明，离职超过3个月请提供失业证明，支持jpeg、jpg、png、pdf，文件需小于20M</span>
+            {/if}
+        </form>
+    </span>
+
+    <span class="info-span" r-hide="{!(attLeavingAffixUploadSuccess)}"><a href="{attLeavingFileInfo&&attLeavingFileInfo.url}">{user}-离职/失业证明.{attLeavingPostfix}</a></span>
+
+
+    <span class="info-edit" on-click="{this.deleteAffix('attLeaving')}" r-hide="{(!attLeavingAffixUploadSuccess) ||auditStatus == 0 || auditStatus ==1 || (auditStatus == 2&&!rejectInfo)}"><span class="improve-delete"></span></span>
+
+</div>
+

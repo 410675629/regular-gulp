@@ -1,0 +1,117 @@
+
+{#if rejectInfo}
+<div class="reject-info">
+    <span class="reject-info-title">驳回原因</span>
+    <span class="reject-info-cont">{rejectInfo}</span>
+</div>
+{/if}
+
+<div class="improve-title f-cb">
+    <span class="improve-title-left">其他信息</span>
+    <span class="info-edit" r-hide="{(!infoReadOnly) || auditStatus == 0 ||auditStatus == 1|| auditStatus == 2&&!rejectInfo}" on-click="{this.changeToEdit()}"><span class="improve-edit"></span>修改</span>
+
+</div>
+<table class="{infoReadOnly?'':'info-table'}">
+
+    <tr>
+        <td>
+            <label class="info-label280"><span class="u-required">*</span>是否曾供职于网易:</label>
+            <span class="info-span info-span-radio">
+
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="workedFlag" value="0" r-model={formData.workedFlag} >否</span>
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="workedFlag" value="1" r-model={formData.workedFlag} >是</span>
+                <span r-hide="{!infoReadOnly}">{#if formData.workedFlag}是{#else}否{/if}</span>
+            </span>
+        </td>
+        <td>
+            <label class="info-label280"><span class="u-required">*</span>是否有传染病及重大疾病的病史：</label>
+            <span class="info-span info-span-radio">
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="diseaseFlag" value="0" r-model={formData.diseaseFlag} >否</span>
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="diseaseFlag" value="1" r-model={formData.diseaseFlag} >是</span>
+                <span r-hide="{!infoReadOnly}">{#if formData.diseaseFlag}是{#else}否{/if}</span>
+            </span>
+
+        </td>
+
+
+    </tr>
+
+    <tr>
+        <td>
+            <label class="info-label280"><span class="u-required">*</span>目前是否在其他单位担任兼职:</label>
+            <span class="info-span info-span-radio">
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="partTimeJobFlag" value="0" r-model={formData.partTimeJobFlag} >否</span>
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="partTimeJobFlag" value="1" r-model={formData.partTimeJobFlag}  >是</span>
+                <span r-hide="{!infoReadOnly}">{#if formData.partTimeJobFlag}是{#else}否{/if}</span>
+            </span>
+        </td>
+        <td>
+            <label class="info-label280"><span class="u-required">*</span>是否与其他单位签订竞业限制协议等保密协议:</label>
+            <span class="info-span info-span-radio">
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="keepSercetFlag" value="0" r-model={formData.keepSercetFlag} >否</span>
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="keepSercetFlag" value="1" r-model={formData.keepSercetFlag} >是</span>
+                <span r-hide="{!infoReadOnly}">{#if formData.keepSercetFlag}是{#else}否{/if}</span>
+            </span>
+
+        </td>
+
+
+    </tr>
+    <tr>
+        <td {#if formData.relativeWorkedFlag!="1"}colspan="2"{/if}>
+            <label class="info-label280"><span class="u-required">*</span>是否有亲友在网易工作:</label>
+            <span class="info-span info-span-radio">
+
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="relativeWorkedFlag" value="0" r-model={formData.relativeWorkedFlag} >否</span>
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="relativeWorkedFlag" value="1" r-model={formData.relativeWorkedFlag} >是</span>
+                <span r-hide="{!infoReadOnly}">{#if formData.relativeWorkedFlag}是{#else}否{/if}</span>
+            </span>
+        </td>
+        {#if formData.relativeWorkedFlag=='1' || formData.relativeWorkedFlag==true}
+        <td>
+            <label class="info-label"><span class="u-required">*</span>姓名及关系:</label>
+            <span class="info-span info-span375">
+
+                <input class='other-text' type="text" r-model="{formData.relativeName}" r-hide="{infoReadOnly}" placeholder="请输入姓名">
+                <input class='other-text' type="text" r-model="{formData.relationship}" r-hide="{infoReadOnly}" placeholder="请输入关系">
+                <span class='info-span info-span130' r-hide="{!infoReadOnly}">{formData.relativeName}</span>
+                <span class='info-span info-span130' r-hide="{!infoReadOnly}">{formData.relationship}</span>
+            </span>
+
+
+
+        </td>
+        {/if}
+
+    </tr>
+
+
+    <tr>
+        <td {#if formData.crimeFlag!="1"}colspan="2"{/if}>
+            <label class="info-label280"><span class="u-required">*</span>是否有违法犯罪记录:</label>
+            <span class="info-span info-span-radio">
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="crimeFlag" value="0" r-model={formData.crimeFlag} >否</span>
+                <span class="other-radio" r-hide="{infoReadOnly}"><input type="radio" name="crimeFlag" value="1" r-model={formData.crimeFlag} >是</span>
+                <span r-hide="{!infoReadOnly}">{#if formData.crimeFlag}是{#else}否{/if}</span>
+            </span>
+        </td>
+        {#if formData.crimeFlag=='1' || formData.crimeFlag==true}
+        <td>
+
+            <label class="info-label"><span class="u-required">*</span>违法犯罪原因:</label>
+            <span class="info-span  info-span375">
+                <input  type="text" r-model="{formData.crimeReason}" r-hide="{infoReadOnly}" placeholder="请输入">
+                <span class='info-span info-span375' r-hide="{!infoReadOnly}">{formData.crimeReason}</span>
+            </span>
+
+
+        </td>
+        {/if}
+    </tr>
+</table>
+
+<div class="info-footer">
+    <input type="submit" value="保    存" class="button btn-active" on-click="{this.submit()}" r-hide="{infoReadOnly}" class='{saveButtonActive?"button btn-active":"button btn-disable"}'>
+</div>
+
+

@@ -1,0 +1,109 @@
+<tr class="{infoReadOnly?'':'info-table'}">
+
+<td>
+        <span class="info-span info-span100">
+            <input type="text" readonly ref="startEduDateStr" r-hide="{infoReadOnly}" on-click={this.addDatePicker(this.$refs.startEduDateStr,"startDate")} r-model="{educationInfo.startDate}" class='{err.startDate?"input-err":""}' on-mouseover="{this.showErrInfo('startDate')}" on-mouseleave="{this.hideErrInfo('startDate')}"/>
+            <span r-hide="{!infoReadOnly}">{educationInfo.startDate}</span>
+            {#if errShowFlag.startDate}
+            <div class="u-err-tip">
+                <i class="u-err">{err.startDate}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+</td>
+<td>
+        <span class="info-span info-span100">
+            <input type="text" class='edu-text100' readonly ref="finishEduDateStr" r-hide="{infoReadOnly}" on-click={this.addDatePicker(this.$refs.finishEduDateStr,"finishDate")} r-model="{educationInfo.finishDate}" class='{err.finishDate?"input-err":""}' on-mouseover="{this.showErrInfo('finishDate')}" on-mouseleave="{this.hideErrInfo('finishDate')}"/>
+            <span r-hide="{!infoReadOnly}">{educationInfo.finishDate}</span>
+            {#if errShowFlag.finishDate}
+            <div class="u-err-tip">
+                <i class="u-err">{err.finishDate}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+</td>
+<td>
+        <span class="info-span info-span100">
+            <select class="edu-select" r-model="{educationInfo.education}" r-hide="{infoReadOnly}" class='{err.education?"select-err edu-select":"edu-select"}' on-mouseover="{this.showErrInfo('education')}" on-mouseleave="{this.hideErrInfo('education')}">
+                <option value="">请选择</option>
+                {#list education as item}
+                <option value="{item.id}" {#if educationInfo.education==item.id}selected{/if}>{item.name}</option>
+
+                {/list}
+            </select>
+
+            <span r-hide="{!infoReadOnly}">{educationName}</span>
+            {#if errShowFlag.education}
+            <div class="u-err-tip">
+                <i class="u-err">{err.education}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+</td>
+<td>
+        <span class="info-span info-span100">
+            <select class="edu-select" r-model="{educationInfo.degree}" r-hide="{infoReadOnly}" class='{err.degree?"select-err edu-select":"edu-select"}' on-mouseover="{this.showErrInfo('degree')}" on-mouseleave="{this.hideErrInfo('degree')}">
+                <option value="">请选择</option>
+                {#list degree as dItem}
+                    <option value={dItem.id} {#if educationInfo.degree==dItem.id}selected{/if}>{dItem.name}</option>
+                {/list}
+            </select>
+            <span r-hide="{!infoReadOnly}">{degreeName}</span>
+            {#if errShowFlag.degree}
+            <div class="u-err-tip">
+                <i class="u-err">{err.degree}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+</td>
+<td>
+        <span class="info-span info-span200">
+            <input type="text" placeholder="请输入" r-model="{educationInfo.schoolName}" r-hide="{infoReadOnly}" class='{err.schoolName?"input-err edu-text200":"edu-text200"}' on-mouseover="{this.showErrInfo('schoolName')}" on-mouseleave="{this.hideErrInfo('schoolName')}"/>
+            <span r-hide="{!infoReadOnly}">{educationInfo.schoolName}</span>
+            {#if errShowFlag.schoolName}
+            <div class="u-err-tip">
+                <i class="u-err">{err.schoolName}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+</td>
+<td>
+        <span class="info-span info-span200">
+            <input type="text" placeholder="请输入" r-model="{educationInfo.majorName}" r-hide="{infoReadOnly}" class='{err.majorName?"input-err edu-text200":"edu-text200"}' on-mouseover="{this.showErrInfo('majorName')}" on-mouseleave="{this.hideErrInfo('majorName')}"/>
+            <span r-hide="{!infoReadOnly}">{educationInfo.majorName}</span>
+            {#if errShowFlag.majorName}
+            <div class="u-err-tip">
+                <i class="u-err">{err.majorName}</i>
+                <i class="u-err-arrow-big"></i>
+                <i class="u-err-arrow-small"></i>
+
+            </div>
+            {/if}
+        </span>
+</td>
+{#if rejectInfo || auditStatus == null}
+<td>
+
+    <span class="improve-save" r-hide="{infoReadOnly}" on-click="{this.saveEduInfo()}"></span>
+    <span class="improve-edit" r-hide="{!infoReadOnly}" on-click="{this.editEduInfo()}"></span>
+    <span class="improve-delete" on-click="{this.deleteEduInfo()}"></span>
+
+</td>
+{/if}
+
+</tr>

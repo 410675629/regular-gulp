@@ -1,0 +1,40 @@
+
+{#if rejectInfo}
+<div class="reject-info">
+    <span class="reject-info-title">驳回原因</span>
+    <span class="reject-info-cont">{rejectInfo}</span>
+</div>
+{/if}
+
+<div class="improve-title f-cb">
+    <span class="improve-title-left">家庭成员</span>
+
+</div>
+
+<table>
+    <thead class="info-table">
+
+    <td class="thead-common thead105"><span class="u-required">*</span>姓名</td>
+    <td class="thead-common thead105"><span class="u-required">*</span>与本人关系</td>
+    <td class="thead-common thead220"><span class="u-required">*</span>工作单位</td>
+    <td class="thead-common thead220"><span class="u-required">*</span>职务</td>
+    <td class="thead-common thead200"><span class="u-required">*</span>联系电话</td>
+    {#if rejectInfo || auditStatus == null}
+    <td class="thead-common thead-add" on-click={this.addFamilyMember()} >添加 <span>+</span> </td>
+    {/if}
+    </thead>
+    <tbody ref="familyCont">
+    {#if familyInfo}
+    {#list familyInfo as item}
+
+
+    <addItem familyInfo="{item}" infoReadOnly = "{true}" auditStatus={auditStatus} rejectInfo={rejectInfo} checkDelete="{checkDelete}" on-checkStatus="{this.checkStatus()}"></addItem>
+
+    {/list}
+    <!--{#elseif auditStatus == null}
+    <addItem auditStatus={auditStatus} rejectInfo={rejectInfo}></addItem>-->
+    {/if}
+    </tbody>
+</table>
+
+

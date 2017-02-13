@@ -1,0 +1,107 @@
+/*头部导航样式*/
+.g-hd{background-color:#fff;border-bottom:1px solid #eee};
+.m-hd{
+  height:80px;
+  width:1080px;
+  margin:0 auto;
+
+  .header-logo{
+    height:40px;
+    margin:20px auto;
+
+  }
+  .login-right{
+    height:40px;
+    margin:20px auto;
+    line-height:40px;
+    font-size:$fontsize-normal;
+    //color:red;
+    color:$font-login;
+    letter-spacing:3px;
+
+    span{
+      display: inline-block;
+      padding:0 5px;
+      &.pointer-span{
+        cursor: pointer;
+      }
+      &.username-span{
+        $noselect();
+        max-width:85px;
+        cursor:default;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+    }
+    i{
+      display:inline-block;
+
+      vertical-align:middle;
+      background-image:url(../img/sprite2.png);
+
+      &.user-name{
+        background-position:0 -59px;
+        width:20px;
+        height:20px;
+      }
+      &.user-exit{
+        background-position:-130px -66px;
+        width:20px;
+        height:15px;
+      }
+      &.login-help{
+        background-position:-99px -62px;
+        width:20px;
+        height:20px;
+      }
+    }
+
+
+  }
+  .header-cells{
+
+    height:40px;
+    margin:0 50px;
+    //line-height:40px;
+    li{
+      width:120px;
+      text-align:center;
+    }
+    .z-crt{
+      $nav-hover();
+    }
+
+    a{
+      color:#383d46;
+      //width:100px;
+      padding:0 10px 10px;
+
+      text-align:center;
+      display:inline-block;
+      font-size:$fontsize-big;
+      margin-bottom:2px;
+      &:hover{
+        $nav-hover();
+      }
+    }
+  }
+}
+.g-mnc{
+  width:100%;
+  min-height:800px;
+}
+.g-ft{
+  width:100%;
+  position:relative;
+  height: 40px;
+  margin-top:20px;
+  line-height: 40px;
+  text-align:center;
+
+  .g-flow{
+    text-align:center;
+  }
+
+}

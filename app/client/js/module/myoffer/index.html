@@ -1,0 +1,67 @@
+<div class="g-cont">
+
+
+    <div class="m-top">
+        {#if offerStatus==8}
+
+        <div class="myoffer-top m-top-left">请仔细查看offer内容，在offer发出的3个工作日内操作“接受offer”</div>
+        <div class="myoffer-top m-top-right">
+            <button class="button btn-active" on-click="{this.submitOfferStatus(9)}">接受offer</button>
+        </div>
+        {#elseif offerStatus == 3}
+        <div class="myoffer-top m-top-left">* offer状态：拒绝offer</div>
+        {#else}
+        <div class="myoffer-top m-top-left">* offer状态：接受offer</div>
+        {/if}
+    </div>
+
+    <div class="m-cont">
+        <span class="corner corner-top-left"></span>
+        <span class="corner corner-top-right"></span>
+        <span class="corner corner-bottom-left"></span>
+        <span class="corner corner-bottom-right"></span>
+
+        <div class="m-center">
+            <div class='m-center-top'>{offerListInfo.title}</div>
+            <div class="m-center-body">
+                <div class="cont">
+                    <div class="first-cont">
+                        <p>{#include offerListInfo.name}</p>
+                    </div>
+                    <div class="second-cont">
+                        <p>{#include offerListInfo.intro}</p>
+
+                    </div>
+
+                    {#list offerListInfo.content as item}
+                    <div class="first-cont">
+                        <p>{#include item.title}</p>
+
+                    </div>
+                    <div class="second-cont">
+                        <p>{#include item.cont}</p>
+                        {#if item.specialInfo }
+                        <div class="second-cont-special">
+                            {#include item.specialInfo}
+                        </div>
+                        {/if}
+
+                    </div>
+                    {/list}
+                    <div class="first-cont ">
+                        <span>我们期望着您加入网易大家庭。</span>
+
+
+                    </div>
+                    <div class="cont-bottom">
+
+                        <p class="cont-bottom-right">{#include offerListInfo.company} </p>
+                        <p class="cont-bottom-right">{#include offerListInfo.offerDate}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,65 @@
+<div class="g-cont">
+    <div class="m-header f-cb">
+
+        <div class="init-state">
+            <p>我们将依据您提供的信息为您办理社保等其他相关事宜，请确保信息真实准确、填写完整。</p>
+            <p>信息全部填写完整后，入职HR将审核信息。</p>
+        </div>
+        {#if auditStatus == 0}
+        <div class="init-button init-text-red">审核中......</div>
+        {#elseif auditStatus == 1}
+        <div class="init-button init-text-red">审核通过</div>
+        {#else}
+        <div class="init-button">
+            <button class="button btn-active" on-click="{this.submitAudit()}">提交审核</button>
+        </div>
+        {/if}
+
+    </div>
+    <div class="m-top m-guide-top">
+
+        <div class="m-nav-slide f-cb">
+            {#list navList as item}
+            <div class='nav-slide-item {this.isSelected(item.id)?"z-crt":""}' >
+                <span on-click={this.onSelected(item_index)}>
+                    {#if item.required}
+                    <span class="u-required improve-required">*</span>
+                    {/if}
+                    {item.name}
+
+                    {#if manageState[item.match + 'State'] == 2 || manageState[item.match + 'State'] == 3}
+                    <i class="audit-status audit-status-reject"></i>
+                    {#elseif manageState[item.match + 'State'] == 1}
+
+                    <i class="audit-status audit-status-accept"></i>
+                    {/if}
+                </span>
+
+            </div>
+            {/list}
+        </div>
+    </div>
+    <div class="m-guide">
+    
+        <div class="m-cont">
+            {#if activeIndex == 0 && auditStatus !== undefined}
+
+                <info rejectInfo = {auditArr[0]} auditStatus = {auditStatus}></info>
+            {#elseif activeIndex == 1 && auditStatus !== undefined}
+                <education rejectInfo = {auditArr[1]} auditStatus = {auditStatus}></education>
+            {#elseif activeIndex == 2 && auditStatus !== undefined}
+                <work rejectInfo = {auditArr[2]} auditStatus = {auditStatus}></work>
+            {#elseif activeIndex ==3 && auditStatus !== undefined}
+                <family rejectInfo = {auditArr[3]} auditStatus = {auditStatus}></family>
+            {#elseif activeIndex == 4 && auditStatus !== undefined}
+
+                <other rejectInfo = {auditArr[4]} auditStatus = {auditStatus}></other>
+            {#elseif activeIndex == 5 && auditStatus !== undefined}
+            <photo rejectInfo = {auditArr[5]} auditStatus = {auditStatus}></photo>
+            {/if}
+
+        </div>
+    </div>
+
+</div>
+

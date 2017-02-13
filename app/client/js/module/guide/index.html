@@ -1,0 +1,37 @@
+
+<div class="g-cont">
+
+    <div class="'m-top m-guide-top">
+        <!--<navlist navFirstList={navFirstList}></navlist>-->
+        <div class="m-nav-slide f-cb">
+            {#list firstNavList as firstNav}
+            <div class='nav-slide-item {selectedFirstIndex==firstNav_index?"z-crt":""}' on-click={this.changeFirstDetail(firstNav.id)}>
+                <span>{firstNav.name}</span>
+
+            </div>
+            {/list}
+        </div>
+    </div>
+    <div class="m-guide">
+        {#if secondNavList}
+        <div class='m-center'>
+            <ul class="f-cb">
+            {#list secondNavList as secondNav}
+
+            <li on-click={this.changeSecondDetail(secondNav.id)} class={selectedSecondIndex==secondNav_index?'z-crt':''}>
+                <span>{secondNav.name}</span>
+
+            </li>
+            {/list}
+            </ul>
+
+        </div>
+        {/if}
+
+        <div class="m-cont" ref=view>
+            {#include currentTemplate}
+        </div>
+    </div>
+
+</div>
+
