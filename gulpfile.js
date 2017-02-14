@@ -34,7 +34,7 @@ gulp.task('browserify', function(done){
     })
     .pipe(source('entry.js'))
     .pipe(buffer())
-        .pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest('public/entry/js'))
     done()
 });

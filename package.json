@@ -22,6 +22,7 @@
     "browserify-ejs": "0.0.2",
     "browserify-html2string": "^1.0.9",
     "component-tip": "^3.0.3",
+    "cropperjs": "^0.8.1",
     "gulp": "^3.8.10",
     "gulp-concat": "^2.6.0",
     "gulp-jshint": "~1.11.2",
