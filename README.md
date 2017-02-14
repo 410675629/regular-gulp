@@ -27,7 +27,3 @@ eg:
 		<div class="nav_right"></div>
 	</div>
 ```
-
-##特别说明 
-
-由于NPM包很难下载下来，所以上传到git仓库中，不需要再下载npm包, 可以直接 gulp;
